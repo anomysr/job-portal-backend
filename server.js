@@ -2,6 +2,8 @@ const express=require("express");
 const dotenv=require("dotenv");
 const cors=require("cors");
 const connectDB=require("./config/db");
+const { protect } =
+require("./middleware/authMiddleware");
 dotenv.config();
 console.log(process.env.MONGO_URI);
 connectDB();
@@ -14,6 +16,21 @@ app.use("/api/auth",authroutes);
 app.get("/",(req,res)=>{
     res.json({
         message:"job portal api running"
+    });
+
+});
+
+const User = require("./models/User");
+
+app.get("/users", async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+});
+
+app.get("/profile", protect, (req, res) => {
+
+    res.json({
+        user: req.user
     });
 
 });
