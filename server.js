@@ -34,6 +34,20 @@ app.get("/profile", protect, (req, res) => {
     });
 
 });
+
+const jobRoutes =
+require("./routes/jobRoutes");
+console.log("jobRoutes =", jobRoutes);
+app.use("/api/jobs", jobRoutes);
+
+const applicationRoutes =
+require("./routes/applicationRoutes");
+
+app.use(
+    "/api/applications",
+    applicationRoutes
+);
+
 const PORT=process.env.PORT||5000;
 
 app.listen(PORT,()=>{
