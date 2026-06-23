@@ -11,7 +11,9 @@ connectDB();
 const authroutes=require("./routes/authroutes");
 const app=express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173"]
+}));
 app.use("/api/auth",authroutes);
 app.get("/",(req,res)=>{
     res.json({
@@ -48,7 +50,14 @@ app.use(
     applicationRoutes
 );
 
+
+
+
 const PORT=process.env.PORT||5000;
+
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 
 app.listen(PORT,()=>{
     console.log(`server running on port ${PORT}`);
