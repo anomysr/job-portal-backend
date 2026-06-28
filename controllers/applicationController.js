@@ -1,5 +1,5 @@
 const Application =
-require("../models/Application");
+require("../models/application");
 
 const applyJob = async (req, res) => {
     try {
