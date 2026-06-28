@@ -1,6 +1,6 @@
 const express=require("express");
 const dotenv=require("dotenv");
-const cors=require("cors");
+
 const connectDB=require("./config/db");
 const { protect } =
 require("./middleware/authMiddleware");
@@ -10,10 +10,21 @@ connectDB();
 
 const authroutes=require("./routes/authroutes");
 const app=express();
-app.use(express.json());
+const cors = require("cors");
 app.use(cors({
-  origin: ["http://localhost:5173"]
+  origin: [
+    "http://localhost:5173",
+    "https://job-portal-frontend.vercel.app"
+  ],
+  credentials: true,
 }));
+
+ 
+
+app.use(express.json());
+
+
+
 app.use("/api/auth",authroutes);
 app.get("/",(req,res)=>{
     res.json({
@@ -22,7 +33,7 @@ app.get("/",(req,res)=>{
 
 });
 
-const User = require("./models/User");
+const User = require("./models/user");
 
 app.get("/users", async (req, res) => {
     const users = await User.find();
